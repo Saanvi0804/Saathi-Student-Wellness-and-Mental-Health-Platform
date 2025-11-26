@@ -12,7 +12,8 @@ const Signup: React.FC = () => {
 
   // Read backend API URL from Vite environment variable
   const BASE_URL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+    import.meta.env.VITE_API_BASE_URL ||
+  "https://saathi-student-wellness-and-mental.onrender.com";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

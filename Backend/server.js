@@ -13,6 +13,11 @@ import analyticsRoutes from "./routes/analyticsRoutes.js"; // ✅ new analytics 
 import journalRoutes from "./routes/journalRoutes.js";
 import moodRoutes from "./routes/mood.js";
 
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "./models/login.js"; // path is from server.js → models folder
+
+
 dotenv.config();
 
 const app = express();
