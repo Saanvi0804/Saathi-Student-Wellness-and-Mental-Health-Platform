@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:5000/api', // Your backend's base URL
+  baseURL: 'https://saathi-student-wellness-and-mental.onrender.com/api', // Your backend's base URL
   headers: {
     'Content-Type': 'application/json',
   },

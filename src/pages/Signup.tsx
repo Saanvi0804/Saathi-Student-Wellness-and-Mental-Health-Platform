@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import apiClient from "../api"; // <-- adjust the path if your api.js is located elsewhere
 import "./Auth.css";
 
 const Signup: React.FC = () => {
@@ -8,27 +8,29 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Read backend API URL from Vite environment variable
-  const BASE_URL =
-    import.meta.env.VITE_API_BASE_URL ||
-  "https://saathi-student-wellness-and-mental.onrender.com";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      await axios.post(`${BASE_URL}/auth/signup`, {
+      // Uses your centralized axios instance from api.js
+      const response = await apiClient.post("/auth/register", {
         username,
         password,
         role,
       });
 
+      console.log("Signup success:", response.data);
       navigate("/login");
     } catch (err: any) {
-      setError(err.response?.data?.error || "Signup failed");
+      console.error("Signup error:", err);
+      setError(err.response?.data?.msg || "Signup failed.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,11 +64,13 @@ const Signup: React.FC = () => {
             <option value="admin">Admin</option>
           </select>
 
-          <button type="submit">Signup</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Signing up..." : "Signup"}
+          </button>
         </form>
 
         <span className="auth-link">
-          Already have an account? <a href="/login">Login here</a>
+          Already have an account? <Link to="/login">Login here</Link>
         </span>
       </div>
     </div>
